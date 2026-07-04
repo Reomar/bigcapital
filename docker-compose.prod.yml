@@ -31,6 +31,7 @@ services:
     depends_on:
       - mysql
       - redis
+      - gotenberg
     restart: unless-stopped
     networks:
       - bigcapital_network
@@ -76,9 +77,9 @@ services:
       # Sign-up email confirmation
       - SIGNUP_EMAIL_CONFIRMATION=${SIGNUP_EMAIL_CONFIRMATION}
 
-      # Gotenberg (Pdf generator)
-      - GOTENBERG_URL=${GOTENBERG_URL}
-      - GOTENBERG_DOCS_URL=${GOTENBERG_DOCS_URL}
+      # Gotenberg (PDF generator)
+      - GOTENBERG_URL=http://gotenberg:3000
+      - GOTENBERG_DOCS_URL=http://gotenberg:3000
 
       # Exchange Rate
       - EXCHANGE_RATE_SERVICE=${EXCHANGE_RATE_SERVICE}
@@ -169,6 +170,7 @@ services:
 
   gotenberg:
     image: gotenberg/gotenberg:7
+    restart: unless-stopped
     expose:
       - '3000'
     networks:
